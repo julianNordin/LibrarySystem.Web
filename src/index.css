@@ -14,3 +14,14 @@ body {
 #root {
   min-height: 100svh;
 }
+
+header nav {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+
+main {
+  padding: 1rem;
+}
