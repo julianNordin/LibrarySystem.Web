@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useLoans } from '../features/loans/hooks/useLoans'
 import { useOverdueLoans } from '../features/loans/hooks/useOverdueLoans'
 import LoanTable from '../features/loans/components/LoanTable'
+import BorrowForm from '../features/loans/components/BorrowForm'
 import LoadingSpinner from '../components/LoadingSpinner'
 import ErrorMessage from '../components/ErrorMessage'
 import EmptyState from '../components/EmptyState'
@@ -36,6 +37,7 @@ function LoansPage() {
   return (
     <div>
       <h1>Loans</h1>
+      <BorrowForm />
       <div role="tablist">
         {FILTERS.map(({ value, label }) => (
           <button
