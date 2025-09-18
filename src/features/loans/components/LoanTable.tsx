@@ -16,6 +16,7 @@ function LoanTable({ loans }: LoanTableProps) {
           <th>Due</th>
           <th>Returned</th>
           <th>Status</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
