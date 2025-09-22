@@ -3,9 +3,9 @@ import { useLoans } from '../features/loans/hooks/useLoans'
 import { useOverdueLoans } from '../features/loans/hooks/useOverdueLoans'
 import LoanTable from '../features/loans/components/LoanTable'
 import BorrowForm from '../features/loans/components/BorrowForm'
-import LoadingSpinner from '../components/LoadingSpinner'
 import ErrorMessage from '../components/ErrorMessage'
 import EmptyState from '../components/EmptyState'
+import Skeleton from '../components/Skeleton'
 
 type LoanFilter = 'all' | 'active' | 'returned' | 'overdue'
 
@@ -52,7 +52,7 @@ function LoansPage() {
         ))}
       </div>
 
-      {isLoading && <LoadingSpinner label="Loading loans…" />}
+      {isLoading && <Skeleton rows={5} />}
       {isError && <ErrorMessage message="Something went wrong loading loans." />}
       {loans && loans.length === 0 && <EmptyState message="No loans match this filter." />}
       {loans && loans.length > 0 && <LoanTable loans={loans} />}
