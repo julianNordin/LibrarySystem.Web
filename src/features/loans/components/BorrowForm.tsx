@@ -5,11 +5,13 @@ import { useBorrowBook } from '../hooks/useBorrowBook'
 import { useBooks } from '../../books/hooks/useBooks'
 import { useMembers } from '../../members/hooks/useMembers'
 import type { ApiError } from '../../../api/apiClient'
+import { useToast } from '../../../context/toastContext'
 
 function BorrowForm() {
   const { data: books } = useBooks()
   const { data: members } = useMembers()
   const borrowBook = useBorrowBook()
+  const { showToast } = useToast()
 
   const {
     register,
@@ -22,11 +24,16 @@ function BorrowForm() {
 
   const onSubmit = (values: BorrowFormValues) => {
     borrowBook.mutate(values, {
-      onSuccess: () => reset(),
+      onSuccess: () => {
+        reset()
+        showToast('Book borrowed successfully.', 'success')
+      },
+      onError: (error) => {
+        const apiError = error as ApiError
+        showToast(apiError.detail ?? apiError.title ?? 'Could not borrow this book.', 'error')
+      },
     })
   }
-
-  const apiError = borrowBook.error as ApiError | null
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -61,11 +68,6 @@ function BorrowForm() {
         </select>
         {errors.memberId && <p role="alert">{errors.memberId.message}</p>}
       </div>
-
-      {borrowBook.isError && (
-        <p role="alert">{apiError?.detail ?? apiError?.title ?? 'Could not borrow this book.'}</p>
-      )}
-      {borrowBook.isSuccess && <p role="status">Book borrowed successfully.</p>}
 
       <button type="submit" disabled={borrowBook.isPending}>
         {borrowBook.isPending ? 'Borrowing…' : 'Borrow'}
