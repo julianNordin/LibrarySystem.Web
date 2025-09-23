@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useReturnBook } from '../hooks/useReturnBook'
-import { useToast } from '../../../context/toastContext'
+import { useToast } from '../../../context/useToast'
 import type { ApiError } from '../../../api/apiClient'
 
 interface ReturnButtonProps {
@@ -26,7 +26,7 @@ function ReturnButton({ loanId }: ReturnButtonProps) {
   if (confirming) {
     return (
       <span>
-        Return this book?{' '}
+        <span>Return this book?</span>{' '}
         <button type="button" disabled={returnBook.isPending} onClick={handleReturn}>
           {returnBook.isPending ? 'Returning…' : 'Confirm'}
         </button>{' '}

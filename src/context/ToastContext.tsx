@@ -1,5 +1,5 @@
 import { useCallback, useState, type ReactNode } from 'react'
-import { ToastContext } from './toastContext'
+import { ToastContext } from './useToast'
 
 interface Toast {
   id: number
