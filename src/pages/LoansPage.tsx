@@ -6,6 +6,7 @@ import BorrowForm from '../features/loans/components/BorrowForm'
 import ErrorMessage from '../components/ErrorMessage'
 import EmptyState from '../components/EmptyState'
 import Skeleton from '../components/Skeleton'
+import styles from './LoansPage.module.css'
 
 type LoanFilter = 'all' | 'active' | 'returned' | 'overdue'
 
@@ -38,13 +39,13 @@ function LoansPage() {
     <div>
       <h1>Loans</h1>
       <BorrowForm />
-      <div role="tablist">
+      <div className={styles.filters} role="group" aria-label="Filter loans">
         {FILTERS.map(({ value, label }) => (
           <button
             key={value}
             type="button"
-            role="tab"
-            aria-selected={filter === value}
+            aria-pressed={filter === value}
+            className={filter === value ? styles.filterActive : styles.filter}
             onClick={() => setFilter(value)}
           >
             {label}

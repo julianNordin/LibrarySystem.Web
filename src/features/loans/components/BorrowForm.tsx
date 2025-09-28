@@ -6,6 +6,7 @@ import { useBooks } from '../../books/hooks/useBooks'
 import { useMembers } from '../../members/hooks/useMembers'
 import type { ApiError } from '../../../api/apiClient'
 import { useToast } from '../../../context/useToast'
+import styles from './BorrowForm.module.css'
 
 function BorrowForm() {
   const { data: books } = useBooks()
@@ -36,10 +37,10 @@ function BorrowForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <h2>Borrow a book</h2>
 
-      <div>
+      <div className={styles.field}>
         <label htmlFor="borrow-book">Book</label>
         <select id="borrow-book" defaultValue="" {...register('bookId')}>
           <option value="" disabled>
@@ -51,10 +52,14 @@ function BorrowForm() {
             </option>
           ))}
         </select>
-        {errors.bookId && <p role="alert">{errors.bookId.message}</p>}
+        {errors.bookId && (
+          <p className={styles.error} role="alert">
+            {errors.bookId.message}
+          </p>
+        )}
       </div>
 
-      <div>
+      <div className={styles.field}>
         <label htmlFor="borrow-member">Member</label>
         <select id="borrow-member" defaultValue="" {...register('memberId')}>
           <option value="" disabled>
@@ -66,7 +71,11 @@ function BorrowForm() {
             </option>
           ))}
         </select>
-        {errors.memberId && <p role="alert">{errors.memberId.message}</p>}
+        {errors.memberId && (
+          <p className={styles.error} role="alert">
+            {errors.memberId.message}
+          </p>
+        )}
       </div>
 
       <button type="submit" disabled={borrowBook.isPending}>

@@ -1,5 +1,7 @@
+import styles from './OverdueBadge.module.css'
+
 function OverdueBadge() {
-  return <span style={{ color: 'crimson', fontWeight: 'bold' }}>Overdue</span>
+  return <span className={styles.badge}>Overdue</span>
 }
 
 export default OverdueBadge
