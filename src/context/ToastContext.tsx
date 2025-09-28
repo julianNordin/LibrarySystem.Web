@@ -1,5 +1,6 @@
 import { useCallback, useState, type ReactNode } from 'react'
 import { ToastContext } from './useToast'
+import styles from './ToastContext.module.css'
 
 interface Toast {
   id: number
@@ -23,9 +24,13 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      <div aria-live="polite" role="region" aria-label="Notifications">
+      <div className={styles.region} aria-live="polite" role="region" aria-label="Notifications">
         {toasts.map((toast) => (
-          <p key={toast.id} role={toast.variant === 'error' ? 'alert' : 'status'}>
+          <p
+            key={toast.id}
+            className={`${styles.toast} ${toast.variant === 'error' ? styles.error : styles.success}`}
+            role={toast.variant === 'error' ? 'alert' : 'status'}
+          >
             {toast.message}
           </p>
         ))}
