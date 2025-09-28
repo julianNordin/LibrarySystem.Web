@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import type { Member } from '../../../types/domain'
+import styles from './MemberCard.module.css'
 
 interface MemberCardProps {
   member: Member
@@ -7,11 +8,11 @@ interface MemberCardProps {
 
 function MemberCard({ member }: MemberCardProps) {
   return (
-    <article>
+    <article className={styles.card}>
       <h2>
         <Link to={`/members/${member.id}`}>{member.fullName}</Link>
       </h2>
-      <p>{member.email}</p>
+      <p className={styles.meta}>{member.email}</p>
     </article>
   )
 }

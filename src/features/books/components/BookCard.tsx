@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import type { Book } from '../../../types/domain'
+import styles from './BookCard.module.css'
 
 interface BookCardProps {
   book: Book
@@ -7,12 +8,12 @@ interface BookCardProps {
 
 function BookCard({ book }: BookCardProps) {
   return (
-    <article>
+    <article className={styles.card}>
       <h2>
         <Link to={`/books/${book.id}`}>{book.title}</Link>
       </h2>
-      <p>{book.author}</p>
-      <p>{book.publicationYear}</p>
+      <p className={styles.meta}>{book.author}</p>
+      <p className={styles.meta}>{book.publicationYear}</p>
     </article>
   )
 }
