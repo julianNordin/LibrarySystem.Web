@@ -1,27 +1,38 @@
+@import './styles/tokens.css';
+
 :root {
   color-scheme: light dark;
-  font:
-    16px/1.5 system-ui,
-    'Segoe UI',
-    Roboto,
-    sans-serif;
+  font: 16px/1.5 var(--font-sans);
 }
 
 body {
   margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
 }
 
 #root {
   min-height: 100svh;
-}
-
-header nav {
   display: flex;
-  gap: 1rem;
-  padding: 1rem;
-  border-bottom: 1px solid #ccc;
+  flex-direction: column;
 }
 
 main {
-  padding: 1rem;
+  flex: 1;
+  padding: var(--space-4);
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
