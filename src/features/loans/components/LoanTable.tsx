@@ -1,5 +1,6 @@
 import type { Loan } from '../../../types/domain'
 import LoanRow from './LoanRow'
+import styles from './LoanTable.module.css'
 
 interface LoanTableProps {
   loans: Loan[]
@@ -7,7 +8,7 @@ interface LoanTableProps {
 
 function LoanTable({ loans }: LoanTableProps) {
   return (
-    <table>
+    <table className={styles.table}>
       <thead>
         <tr>
           <th>Book</th>
