@@ -1,16 +1,20 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import { loansApi } from '../../../api/loansApi'
 import type { BorrowRequest } from '../../../types/domain'
+import { useMutationWithToast } from '../../../hooks/useMutationWithToast'
+import { queryKeys } from '../../../lib/queryKeys'
 
 export function useBorrowBook() {
   const queryClient = useQueryClient()
 
-  return useMutation({
+  return useMutationWithToast({
     mutationFn: (request: BorrowRequest) => loansApi.borrow(request),
+    successMessage: 'Book borrowed successfully.',
+    errorMessage: (error) => error.detail ?? error.title ?? 'Could not borrow this book.',
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['books'] })
-      queryClient.invalidateQueries({ queryKey: ['members'] })
-      queryClient.invalidateQueries({ queryKey: ['loans'] })
+      queryClient.invalidateQueries({ queryKey: queryKeys.books.all })
+      queryClient.invalidateQueries({ queryKey: queryKeys.members.all })
+      queryClient.invalidateQueries({ queryKey: queryKeys.loans.all })
     },
   })
 }
