@@ -4,15 +4,12 @@ import { borrowSchema, type BorrowFormInput, type BorrowFormValues } from '../sc
 import { useBorrowBook } from '../hooks/useBorrowBook'
 import { useBooks } from '../../books/hooks/useBooks'
 import { useMembers } from '../../members/hooks/useMembers'
-import type { ApiError } from '../../../api/apiClient'
-import { useToast } from '../../../context/useToast'
 import styles from './BorrowForm.module.css'
 
 function BorrowForm() {
   const { data: books } = useBooks()
   const { data: members } = useMembers()
   const borrowBook = useBorrowBook()
-  const { showToast } = useToast()
 
   const {
     register,
@@ -24,16 +21,7 @@ function BorrowForm() {
   })
 
   const onSubmit = (values: BorrowFormValues) => {
-    borrowBook.mutate(values, {
-      onSuccess: () => {
-        reset()
-        showToast('Book borrowed successfully.', 'success')
-      },
-      onError: (error) => {
-        const apiError = error as ApiError
-        showToast(apiError.detail ?? apiError.title ?? 'Could not borrow this book.', 'error')
-      },
-    })
+    borrowBook.mutate(values, { onSuccess: () => reset() })
   }
 
   return (

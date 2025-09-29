@@ -1,7 +1,5 @@
 import { useState } from 'react'
 import { useReturnBook } from '../hooks/useReturnBook'
-import { useToast } from '../../../context/useToast'
-import type { ApiError } from '../../../api/apiClient'
 
 interface ReturnButtonProps {
   loanId: number
@@ -10,17 +8,9 @@ interface ReturnButtonProps {
 function ReturnButton({ loanId }: ReturnButtonProps) {
   const [confirming, setConfirming] = useState(false)
   const returnBook = useReturnBook()
-  const { showToast } = useToast()
 
   const handleReturn = () => {
-    returnBook.mutate(loanId, {
-      onSuccess: () => showToast('Book returned successfully.', 'success'),
-      onError: (error) => {
-        const apiError = error as ApiError
-        showToast(apiError.detail ?? apiError.title ?? 'Could not return this book.', 'error')
-      },
-      onSettled: () => setConfirming(false),
-    })
+    returnBook.mutate(loanId, { onSettled: () => setConfirming(false) })
   }
 
   if (confirming) {
