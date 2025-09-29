@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import type { Loan } from '../../../types/domain'
 import OverdueBadge from './OverdueBadge'
 import ReturnButton from './ReturnButton'
@@ -35,4 +36,4 @@ function LoanRow({ loan }: LoanRowProps) {
   )
 }
 
-export default LoanRow
+export default memo(LoanRow)

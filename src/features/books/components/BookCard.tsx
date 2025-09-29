@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import type { Book } from '../../../types/domain'
 import styles from './BookCard.module.css'
@@ -18,4 +19,4 @@ function BookCard({ book }: BookCardProps) {
   )
 }
 
-export default BookCard
+export default memo(BookCard)

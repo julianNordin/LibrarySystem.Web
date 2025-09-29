@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import type { Member } from '../../../types/domain'
 import styles from './MemberCard.module.css'
@@ -17,4 +18,4 @@ function MemberCard({ member }: MemberCardProps) {
   )
 }
 
-export default MemberCard
+export default memo(MemberCard)
