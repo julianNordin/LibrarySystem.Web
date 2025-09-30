@@ -14,12 +14,33 @@ export class ApiError extends Error {
   }
 }
 
+interface ProblemBody {
+  title?: string
+  detail?: string
+}
+
+async function readProblemBody(response: Response): Promise<ProblemBody | null> {
+  try {
+    const body: unknown = await response.json()
+    return typeof body === 'object' && body !== null ? (body as ProblemBody) : null
+  } catch {
+    return null
+  }
+}
+
 async function parseErrorResponse(response: Response): Promise<ApiError> {
   const contentType = response.headers.get('content-type') ?? ''
-  if (contentType.includes('application/problem+json')) {
-    const problem = (await response.json()) as { title?: string; detail?: string }
-    return new ApiError(response.status, problem.title ?? response.statusText, problem.detail)
+
+  // P1 builds RFC 7807 bodies but writes them with WriteAsJsonAsync, which labels them
+  // `application/json` rather than `application/problem+json` — so match any JSON type.
+  // A body-less error (P1's bare NotFound()) leaves the title as the status text.
+  if (contentType.includes('json')) {
+    const problem = await readProblemBody(response)
+    if (problem) {
+      return new ApiError(response.status, problem.title ?? response.statusText, problem.detail)
+    }
   }
+
   return new ApiError(response.status, response.statusText)
 }
 

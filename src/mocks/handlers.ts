@@ -3,11 +3,11 @@ import { books, createLoan, loans, members } from './data'
 
 const MAX_ACTIVE_LOANS = 5
 
+// Mirrors P1's GlobalExceptionHandler: it builds an RFC 7807 ProblemDetails but writes it
+// with WriteAsJsonAsync, so the real content type is `application/json`. Do not "fix" this
+// to `application/problem+json` — that mismatch previously hid a bug in apiClient.
 function problem(status: number, title: string, detail: string) {
-  return HttpResponse.json(
-    { status, title, detail },
-    { status, headers: { 'Content-Type': 'application/problem+json' } },
-  )
+  return HttpResponse.json({ status, title, detail }, { status })
 }
 
 export const handlers = [
