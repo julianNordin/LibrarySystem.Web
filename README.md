@@ -1,8 +1,14 @@
-# P2 — Library Frontend
+# LibrarySystem.Web
 
 A React + TypeScript single-page app for browsing books, borrowing/returning them, viewing
-members, and checking loan history. It's the frontend for the P1 API — a library lending
+members, and checking loan history. It's the frontend for
+[LibrarySystem.Api](https://github.com/julianNordin/LibrarySystem.Api) — a library lending
 system built with ASP.NET Core — consuming a real REST API instead of mocked data.
+
+## Related projects
+
+- [LibrarySystem.Api](https://github.com/julianNordin/LibrarySystem.Api) — the ASP.NET Core API this app consumes
+- [librarysystem-azure-deploy](https://github.com/julianNordin/librarysystem-azure-deploy) — this app and its API, deployed to Azure with Bicep, Key Vault, and a credential-free CI/CD pipeline
 
 ## Features
 
@@ -28,9 +34,9 @@ system built with ASP.NET Core — consuming a real REST API instead of mocked d
 
 ## Getting Started
 
-1. Run the P1 API first (see the P1 project's README) — by default it listens on
-   `http://localhost:5018`, with seed data (5 books, 3 members) created automatically on
-   first run.
+1. Run the [LibrarySystem.Api](https://github.com/julianNordin/LibrarySystem.Api) first (see
+   its README) — by default it listens on `http://localhost:5018`, with seed data (5 books,
+   3 members) created automatically on first run.
 2. Install dependencies:
 
    ```bash
@@ -45,12 +51,12 @@ system built with ASP.NET Core — consuming a real REST API instead of mocked d
 
 4. Open `http://localhost:5173`.
 
-The dev server proxies `/api` requests to the P1 API (see `vite.config.ts`), so the app
-talks to P1 as if it were same-origin — no CORS configuration on P1 is required for local
-development. If P2 is ever deployed to a different origin than the API (e.g. a separate
-static host and API server in production), a CORS policy would need to be added to P1, and
-`VITE_API_BASE_URL` (see `.env.example`) set to the API's URL — that's out of scope for the
-current phased build, which targets local development only.
+The dev server proxies `/api` requests to the API (see `vite.config.ts`), so the app talks
+to it as if it were same-origin — no CORS configuration on the API is required for local
+development. If this app is ever deployed to a different origin than the API (e.g. a
+separate static host and API server in production), a CORS policy would need to be added to
+the API, and `VITE_API_BASE_URL` (see `.env.example`) set to the API's URL — that's out of
+scope for the current phased build, which targets local development only.
 
 ## API Endpoints Consumed
 
@@ -73,7 +79,7 @@ current phased build, which targets local development only.
 ## Project Structure
 
 - `src/api/` — fetch-based API client and per-resource API modules
-- `src/types/domain.ts` — TypeScript types mirroring P1's DTOs
+- `src/types/domain.ts` — TypeScript types mirroring the API's DTOs
 - `src/features/<feature>/` — hooks, components, and schemas grouped by domain (books,
   members, loans)
 - `src/pages/` — route-level page components
